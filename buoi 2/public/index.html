@@ -1,0 +1,30 @@
+<div>
+    <h1>Hello uwu</h1>
+</div>
+
+<button onClick="handleClick()">Click</button>
+
+<script src="/socket.io/socket.io.js"></script>
+<!--socket io danh cho client-->
+<script>
+    const socket = io("localhost:3000");
+
+    socket.on("MESSAGE", (data) => {
+        console.log(data)
+    })
+
+    socket.on("CHAT_INFO", (data) => {
+        console.log(data)
+    })
+
+    //setTimeout(() => {
+        
+    //}, 2000)
+    //emit co ten va data.
+
+    function handleClick() {
+        socket.emit("MESSAGE", {
+            data: "Hello bros"
+        })
+    }
+</script>
