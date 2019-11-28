@@ -5,8 +5,9 @@ const CategoryController = require("../apps/controllers/admin/Category")
 const UserController = require("../apps/controllers/admin/User")
 
 router.get("/admin/login", AdminController.getLogin)
+router.post("/admin/login", AdminController.postLogin)
 router.get("/admin/logout", AdminController.getLogout)
-router.get("/admin/dashboard", AdminController.getDashoard)
+router.get("/admin/dashboard", AdminController.getDashboard)
 
 router.get("/admin/product/list", ProductController.getList)
 router.get("/admin/product/add", ProductController.getAdd)

@@ -24,7 +24,9 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Vietpro Mobile Shop - Administrator</div>
 				<div class="panel-body">
+					<% if(data && data.error) {%>
 					<div class="alert alert-danger">Tài khoản không hợp lệ !</div>
+					<% }%>
 					<form role="form" method="post">
 						<fieldset>
 							<div class="form-group">
