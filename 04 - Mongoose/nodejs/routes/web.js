@@ -3,22 +3,25 @@ const UserController = require("../apps/controllers/admin/User")
 const CategoryController = require("../apps/controllers/admin/Category")
 const ProductController = require("../apps/controllers/admin/Product")
 const AdminController = require("../apps/controllers/admin/Admin")
+const Auth = require("../apps/middleware/admin/auth")
 
 module.exports = (app) => {
 
 app.group("/login", (router) => {
+    router.use((req, res, next) => {
+        return Auth.authCheck(req, res, next)
+    })
     router.get("/", AdminController.getLogin)
     router.post("/", AdminController.postLogin)
 })
 
 app.group("/admin", (router) => {
+    router.use((req, res, next) => {
+        return Auth.authGuest(req, res, next)
+    })
+
     router.get("/logout", AdminController.getLogout)
-    router.get("/dashboard", (req, res, next) => {
-        if (!req.session.mail) {
-            return res.redirect("/login")
-        }
-        next()
-    }, AdminController.getDashboard)
+    router.get("/dashboard", AdminController.getDashboard)
 
     router.get("/product/list", ProductController.getList)
     router.get("/product/add", ProductController.getAdd)
@@ -27,6 +30,15 @@ app.group("/admin", (router) => {
     router.post("/product/edit/:prd_id", ProductController.postEdit)
     router.get("/product/del/:prd_id", ProductController.getDel)
 })
+
+// // Acient Middleware
+// router.get("/dashboard", (req, res, next) => {
+//     if (!req.session.mail) {
+//         return res.redirect("/login")
+//     }
+//     next()
+// }, AdminController.getDashboard)
+
 
 // router.get("/login", AdminController.getLogin)
 // router.post("/login", AdminController.postLogin)
