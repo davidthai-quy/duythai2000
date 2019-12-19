@@ -60,10 +60,9 @@
                                 <div class="form-group">
                                     <label>Danh mục</label>
                                     <select name="cat_id" class="form-control">
-                                        <option value=1>iPhone</option>
-                                        <option value=2>Samsung</option>
-                                        <option value=3>Nokia</option>
-                                        <option value=4>LG</option>
+                                        <%for(key in data.categories){%>
+                                        <option value=<%=data.categories[key]._id%>><%=data.categories[key].cat_name%></option>
+                                        <%}%>
                                     </select>
                                 </div>
                                 

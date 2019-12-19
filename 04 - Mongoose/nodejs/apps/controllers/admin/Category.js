@@ -1,6 +1,11 @@
-function getList(req, res){
-    res.send("Category List");
+const CategoryModel = require("../../models/admin/category.model")
+
+async function getList(req, res){
+    let category = await CategoryModel.find()
+    category = JSON.parse(JSON.stringify(category))
+    res.render("admin/category", {data: {category: category}});
 }
+
 function getAdd(req, res){
     res.send("Category Add");
 }

@@ -11,6 +11,9 @@ function postLogin(req, res){
     const docs = UserModel.find({user_mail: mail, user_pass: pass}, (err, docs) =>{
         
         if(docs.length > 0){
+
+            req.session.mail = mail
+
             res.redirect("/admin/dashboard")
         }
         else{
@@ -21,7 +24,9 @@ function postLogin(req, res){
 
 }
 function getLogout(req, res){
-    res.send("Logout");
+
+    req.session.destroy()
+    res.redirect("/login")
 }
 function getDashboard(req, res){
       

@@ -1,6 +1,11 @@
-function getList(req, res){
-    res.send("User List");
+const UserModel = require("../../models/admin/user.model")
+
+async function getList(req, res){
+    let user = await UserModel.find()
+    user = JSON.parse(JSON.stringify(user))
+    res.render("admin/user", {data: {user: user}});
 }
+
 function getAdd(req, res){
     res.send("User Add");
 }

@@ -4,27 +4,60 @@ const CategoryController = require("../apps/controllers/admin/Category")
 const ProductController = require("../apps/controllers/admin/Product")
 const AdminController = require("../apps/controllers/admin/Admin")
 
-router.get("/admin/login", AdminController.getLogin)
-router.post("/admin/login", AdminController.postLogin)
-router.get("/admin/logout", AdminController.getLogout)
-router.get("/admin/dashboard", AdminController.getDashboard)
+module.exports = (app) => {
 
-router.get("/admin/User/list", UserController.getList)
-router.get("/admin/User/add", UserController.getAdd)
-router.get("/admin/User/edit", UserController.getEdit)
-router.get("/admin/User/del", UserController.getDel)
+app.group("/login", (router) => {
+    router.get("/", AdminController.getLogin)
+    router.post("/", AdminController.postLogin)
+})
 
-router.get("/admin/Category/list", CategoryController.getList)
-router.get("/admin/Category/add", CategoryController.getAdd)
-router.get("/admin/Category/edit", CategoryController.getEdit)
-router.get("/admin/Category/del", CategoryController.getDel)
+app.group("/admin", (router) => {
+    router.get("/logout", AdminController.getLogout)
+    router.get("/dashboard", (req, res, next) => {
+        if (!req.session.mail) {
+            return res.redirect("/login")
+        }
+        next()
+    }, AdminController.getDashboard)
 
-router.get("/admin/product/list", ProductController.getList)
-router.get("/admin/product/add", ProductController.getAdd)
-router.get("/admin/product/edit", ProductController.getEdit)
-router.get("/admin/product/del", ProductController.getDel)
+    router.get("/product/list", ProductController.getList)
+    router.get("/product/add", ProductController.getAdd)
+    router.post("/product/add", ProductController.postAdd)
+    router.get("/product/edit/:prd_id", ProductController.getEdit)
+    router.post("/product/edit/:prd_id", ProductController.postEdit)
+    router.get("/product/del/:prd_id", ProductController.getDel)
+})
 
-router.get("/test", ProductController.getTest)
-router.post("/test", ProductController.postTest)
+// router.get("/login", AdminController.getLogin)
+// router.post("/login", AdminController.postLogin)
 
-module.exports = router
+// router.get("/admin/logout", AdminController.getLogout)
+// router.get("/admin/dashboard", (req, res, next) => {
+//     if (!req.session.mail) {
+//         return res.redirect("/admin/login")
+//     }
+//     next()
+// }, AdminController.getDashboard)
+
+// router.get("/product/list", ProductController.getList)
+// router.get("/product/add", ProductController.getAdd)
+// router.post("/product/add", ProductController.postAdd)
+// router.get("/product/edit/:prd_id", ProductController.getEdit)
+// router.post("/product/edit/:prd_id", ProductController.postEdit)
+// router.get("/product/del/:prd_id", ProductController.getDel)
+
+// router.get("/admin/User/list", UserController.getList)
+// router.get("/admin/User/add", UserController.getAdd)
+// router.get("/admin/User/edit", UserController.getEdit)
+// router.get("/admin/User/del", UserController.getDel)
+
+// router.get("/admin/Category/list", CategoryController.getList)
+// router.get("/admin/Category/add", CategoryController.getAdd)
+// router.get("/admin/Category/edit", CategoryController.getEdit)
+// router.get("/admin/Category/del", CategoryController.getDel)
+
+// ///test/:abc
+// router.get("/test", ProductController.getTest)
+// router.post("/test", ProductController.postTest)
+
+}
