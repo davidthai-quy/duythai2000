@@ -5,6 +5,8 @@ const ProductController = require("../apps/controllers/admin/Product")
 const AdminController = require("../apps/controllers/admin/Admin")
 const Auth = require("../apps/middleware/admin/auth")
 
+const IndexController = require("../apps/controllers/site/Index")
+
 module.exports = (app) => {
 
 app.group("/login", (router) => {
@@ -29,6 +31,15 @@ app.group("/admin", (router) => {
     router.get("/product/edit/:prd_id", ProductController.getEdit)
     router.post("/product/edit/:prd_id", ProductController.postEdit)
     router.get("/product/del/:prd_id", ProductController.getDel)
+})
+
+app.group("/", (router) => {
+    router.get("", IndexController.home)
+    router.get("/category", IndexController.category)
+    router.get("/product", IndexController.product)
+    router.get("/search", IndexController.search)
+    router.get("/cart", IndexController.cart)
+    router.get("/success", IndexController.success)
 })
 
 // // Acient Middleware
