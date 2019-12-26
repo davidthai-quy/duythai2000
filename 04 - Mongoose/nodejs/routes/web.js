@@ -6,6 +6,7 @@ const AdminController = require("../apps/controllers/admin/Admin")
 const Auth = require("../apps/middleware/admin/auth")
 
 const IndexController = require("../apps/controllers/site/Index")
+const Category = require("../apps/middleware/site/category")
 
 module.exports = (app) => {
 
@@ -34,8 +35,13 @@ app.group("/admin", (router) => {
 })
 
 app.group("/", (router) => {
+
+    router.use((req, res, next) => {
+        return Category(req, res, next)
+    })
+
     router.get("", IndexController.home)
-    router.get("/category", IndexController.category)
+    router.get("/category/:prd_name/:_id", IndexController.category)
     router.get("/product", IndexController.product)
     router.get("/search", IndexController.search)
     router.get("/cart", IndexController.cart)

@@ -11,9 +11,16 @@ async function home(req, res) {
     res.render("site/index", {data: {featuredProduct:featuredProduct, latestProduct:latestProduct, i:0}})
 }
 
-function category(req, res) {
-    res.render("site/category")
+async function category(req, res) {
+    const cat_id = req.params._id
+    const _id = req.params._id
+    let categoryName = await CategoryModel.find({_id})
+    // console.log(categoryName)
+    let productList = await ProductModel.find({cat_id})
+    let total = productList.length
+    res.render("site/category", {data: {productList:productList, total:total, categoryName:categoryName}})
 }
+
 function product(req, res) {
     res.render("site/product")
 }
