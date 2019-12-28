@@ -42,7 +42,7 @@ app.group("/", (router) => {
 
     router.get("", IndexController.home)
     router.get("/category/:prd_name/:_id", IndexController.category)
-    router.get("/product", IndexController.product)
+    router.get("/product/:prd_id", IndexController.product)
     router.get("/search", IndexController.search)
     router.get("/cart", IndexController.cart)
     router.get("/success", IndexController.success)

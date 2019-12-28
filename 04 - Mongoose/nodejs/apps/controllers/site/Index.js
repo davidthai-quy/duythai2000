@@ -21,8 +21,10 @@ async function category(req, res) {
     res.render("site/category", {data: {productList:productList, total:total, categoryName:categoryName}})
 }
 
-function product(req, res) {
-    res.render("site/product")
+async function product(req, res) {
+    const prd_id = req.params.prd_id
+    const product = await ProductModel.findOne({_id: prd_id})
+    res.render("site/product", {data:{product:product}})
 }
 function search(req, res) {
     res.render("site/search")
