@@ -1,0 +1,49 @@
+<% include layout/header%>
+
+<!--	List Product	-->
+<div class="products">
+    <h3><%=data.catName%> (hiện có <%=data.totals%> sản phẩm)</h3>
+    <%
+        for(x in data.products){
+            if(data.i==0){
+        %>
+    <div class="product-list card-deck">
+        <%
+        }
+        %>
+        <div class="product-item card text-center">
+            <a href="/product/<%=data.products[x]._id%>"><img src="/static/images/products/<%=data.products[x].prd_image%>"></a>
+            <h4><a href="/product/<%=data.products[x]._id%>"><%=data.products[x].prd_name%></a></h4>
+            <p>Giá Bán: <span><%=data.products[x].prd_price%>đ</span></p>
+        </div>
+        <%
+            data.i++
+            if(data.i==3){
+                data.i = 0
+        %>
+    </div>
+    <%
+            }
+        }
+        if(data.i%3!=0){
+        %>
+        </div>
+        <%
+        }
+        %>
+</div>
+<!--	End List Product	-->
+
+<div id="pagination">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Trang trước</a></li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Trang sau</a></li>
+    </ul>
+</div>
+
+</div>
+
+<% include layout/footer%>
